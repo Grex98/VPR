@@ -139,7 +139,9 @@ class Example2 extends Phaser.Scene
        
 	const body2 = this.matter.add.circle(150, 200, 16, { friction: 0.1, frictionAir: 0.0001});
 	const circle2 = this.add.circle(150, 200, 16, 0xff0000)
-	const round1 = this.matter.add.gameObject(circle2, body2)
+	const mass = this.matter.add.gameObject(circle2, body2)
+	mass.setMass(weight)
+    
 
 
 
