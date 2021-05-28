@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body>
+
+<script src="https://cdn.jsdelivr.net/npm/phaser@3.54.0/dist/phaser.min.js"></script>
+	<script>
+
+
+
+class Example extends Phaser.Scene
+{
+    constructor ()
+    {
+        super();
+    }
+
+    create ()
+    {
+        this.matter.world.setBounds();
+
+	const text = this.add.text(17, 490, "", {});
+	text.scaleX = 1;
+	text.scaleY = 2;
+	text.text = "Weight:";
+
+	const text_1 = this.add.text(17, 515, "", {});
+	text_1.scaleX = 1;
+	text_1.scaleY = 2;
+	text_1.text = "Length:";
+
+        //  First, we'll create a few static bodies
+        const body1 = this.matter.add.rectangle(250, 200, 200, 32, { isStatic: true });
+	const body4 = this.matter.add.rectangle(550, 200, 200, 32, { isStatic: true });
+	const rectangle1 = this.add.rectangle(250, 200, 200, 32, 0x0000ff)
+	const rectangle4 = this.add.rectangle(550, 200, 200, 32, 0x0000ff)
+	this.matter.add.gameObject(rectangle1, body1)
+	this.matter.add.gameObject(rectangle4, body4)
+    
+       
+        //  Some different joint types
+       	const circle2 = this.add.circle(150, 250, 16, 0xff0000)
+	const circle3 = this.add.circle(400, 450, 16, 0xff0000)
+	const body2 = this.matter.add.circle(150, 250, 16);
+        const body3 = this.matter.add.circle(400, 450, 16);
+	this.matter.add.gameObject(circle2, body2)
+	this.matter.add.gameObject(circle3, body3)
+
+        
+        //  A spring, because length > 0 and stiffness < 0.9
+        this.matter.add.spring(body1, body2, 140, 0.0009);
+    
+        //  A joint, because length > 0 and stiffness > 0.1
+        this.matter.add.spring(body4, body3, 140, 1);
+    
+      
+    
+        this.matter.add.mouseSpring();
+    }
+}
+
+const config = {
+    type: Phaser.AUTO,
+    width: 800,
+    height: 600,
+    backgroundColor: '#000000',
+    parent: 'phaser-example',
+    physics: {
+        default: 'matter',
+        matter: {
+            enableSleeping: true,
+            debug: {
+
+                showAxes: false,
+                showAngleIndicator: true,
+                angleColor: 0xe81153,
+
+                showBroadphase: false,
+                broadphaseColor: 0xffb400,
+
+                showBounds: false,
+                boundsColor: 0xffffff,
+
+                showVelocity: true,
+                velocityColor: 0x00aeef,
+
+                showCollisions: true,
+                collisionColor: 0xf5950c,
+    
+                showSeparations: false,
+                separationColor: 0xffa500,
+
+                showBody: true,
+                showStaticBody: true,
+                showInternalEdges: true,
+
+                renderFill: false,
+                renderLine: true,
+    
+                fillColor: 0x106909,
+                fillOpacity: 1,
+                lineColor: 0x28de19,
+                lineOpacity: 1,
+                lineThickness: 1,
+    
+                staticFillColor: 0x0d177b,
+                staticLineColor: 0x1327e4,
+
+                showSleeping: true,
+                staticBodySleepOpacity: 1,
+                sleepFillColor: 0x464646,
+                sleepLineColor: 0x999a99,
+    
+                showSensors: true,
+                sensorFillColor: 0x0d177b,
+                sensorLineColor: 0x1327e4,
+    
+                showPositions: true,
+                positionSize: 4,
+                positionColor: 0xe042da,
+    
+                showJoint: true,
+                jointColor: 0xe0e042,
+                jointLineOpacity: 1,
+                jointLineThickness: 2,
+    
+                pinSize: 4,
+                pinColor: 0x42e0e0,
+    
+                springColor: 0xe042e0,
+    
+                anchorColor: 0xefefef,
+                anchorSize: 4,
+    
+                showConvexHulls: true,
+                hullColor: 0xd703d0
+            }
+        }
+    },
+    scene: Example
+};
+
+let game = new Phaser.Game(config);
+	</script>
+
+</body>
+</html>

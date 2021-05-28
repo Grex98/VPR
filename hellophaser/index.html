@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body>
+
+<script src="lib/phaser.min.js"></script>
+	<script>
+
+
+class Example extends Phaser.Scene
+{
+
+    constructor ()
+    {
+        super({key: 'Example'});
+    }
+
+    create ()
+    {
+
+        this.matter.world.setBounds();
+
+	this.add.text(260, 15, 'Press SPACE to apply', { fontSize: '23px'});
+	const button = this.add.rectangle(400, 50, 100, 25, 0x00ff00).setInteractive();
+	this.add.text(360, 40, 'SPRING', { fontSize: '23px', color: 'ffffff'});
+
+      
+        //const body1 = this.matter.add.rectangle(250, 100, 200, 32, { isStatic: true });
+	const body4 = this.matter.add.rectangle(400, 100, 200, 32, { isStatic: true });
+	//const rectangle1 = this.add.rectangle(250, 200, 200, 32, 0x0000ff)
+	const rectangle4 = this.add.rectangle(400, 200, 200, 32, 0x0000ff)
+	//this.matter.add.gameObject(rectangle1, body1)
+	this.matter.add.gameObject(rectangle4, body4)
+    
+       
+	//const body2 = this.matter.add.circle(150, 200, 16, { friction: 0.1, frictionAir: 0.0001});
+        const body3 = this.matter.add.circle(450, 200, 16, { friction: 0.1, frictionAir: 0.0001, density: 0.1});
+	//const circle2 = this.add.circle(150, 200, 16, 0xff0000)
+	const circle3 = this.add.circle(450, 200, 16, 0xff0000)
+	//const round1 = this.matter.add.gameObject(circle2, body2)
+	const round2 = this.matter.add.gameObject(circle3, body3)
+
+
+        
+        //  length > 0 and stiffness < 0.9
+	
+        //const spring1 = this.matter.add.spring(body1, body2, length, 0.001);
+	
+    
+        //  length > 0 and stiffness > 0.1
+        const spring2 = this.matter.add.spring(body4, body3, length, 1);
+    
+      	cursors = this.input.keyboard.createCursorKeys();
+	KeyQ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
+    
+        this.matter.add.mouseSpring();
+
+	lengthText = this.add.text(17, 515, 'Lenght: ' + length, { fontSize: '32px'});
+	weightText = this.add.text(17, 490, 'Weight: ' + weight, { fontSize: '32px'});
+
+	this.input.manager.enabled = true;
+
+	button.on('pointerdown', function () {
+
+            this.scene.start('Example2');
+
+        }, this);
+    }
+ update()
+    {
+        if (cursors.up.isDown)
+        {
+            length += 1;
+		if (length > 340)
+       	 	{length = 340
+		}
+	lengthText.setText('Lenght: ' + length);
+
+	}
+	else if (cursors.down.isDown)
+        {
+           length -= 1;
+		if (length < 70)
+       	 	{length = 70
+		}
+	lengthText.setText('Lenght: ' + length);
+	}
+	else if (cursors.left.isDown)
+        {
+	weight -= 1;
+      	weightText.setText('Weight: ' + weight);
+	}
+	else if (cursors.right.isDown)
+        {
+	weight += 1;
+      	weightText.setText('Weight: ' + weight);
+	}
+	else if (cursors.space.isDown)
+        {
+      	this.scene.stop();
+	this.scene.start();
+	}
+	else if (KeyQ.isDown)
+        {
+      	this.scene.stop(Example);
+	this.scene.switch(Example2);
+	}
+     }   
+}  
+class Example2 extends Phaser.Scene
+{
+    constructor ()
+    {
+        super({key: 'Example2'});
+    }
+
+    create ()
+    {
+
+        this.matter.world.setBounds();
+
+	this.add.text(260, 15, 'Press SPACE to apply', { fontSize: '23px'});
+	const button2 = this.add.rectangle(400, 50, 100, 25, 0x00ff00).setInteractive();
+	this.add.text(360, 40, 'THREAD', { fontSize: '23px', color: 'ffffff'});
+
+	
+
+      
+        const body1 = this.matter.add.rectangle(400, 100, 200, 32, { isStatic: true });
+	const rectangle1 = this.add.rectangle(400, 200, 200, 32, 0x0000ff)
+	this.matter.add.gameObject(rectangle1, body1)
+
+    
+       
+	const body2 = this.matter.add.circle(150, 200, 16, { friction: 0.1, frictionAir: 0.0001});
+	const circle2 = this.add.circle(150, 200, 16, 0xff0000)
+	const round1 = this.matter.add.gameObject(circle2, body2)
+
+
+
+        
+        //  length > 0 and stiffness < 0.9
+	
+        const spring1 = this.matter.add.spring(body1, body2, length, rate);
+	
+    
+        //  length > 0 and stiffness > 0.1
+      //  const spring2 = this.matter.add.spring(body4, body3, length, 1);
+    
+      	cursors = this.input.keyboard.createCursorKeys();
+	KeyQ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
+	KeyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
+    
+        this.matter.add.mouseSpring();
+
+	lengthText = this.add.text(17, 515, 'Lenght: ' + length, { fontSize: '32px'});
+	weightText = this.add.text(17, 490, 'Weight: ' + weight, { fontSize: '32px'});
+	rateText = this.add.text(17, 455, 'Spring rate: ' + rate, { fontSize: '32px'});
+	
+	this.input.manager.enabled = true;
+
+	button2.on('pointerdown', function () {
+
+            this.scene.start('Example');
+
+        }, this);
+    }
+ update()
+    {
+        if (cursors.up.isDown)
+        {
+            length += 1;
+		if (length > 340)
+       	 	{length = 340
+		}
+	lengthText.setText('Lenght: ' + length);
+
+	}
+	else if (cursors.down.isDown)
+        {
+           length -= 1;
+		if (length < 70)
+       	 	{length = 70
+		}
+	lengthText.setText('Lenght: ' + length);
+	}
+	else if (cursors.left.isDown)
+        {
+	weight -= 1;
+      	weightText.setText('Weight: ' + weight);
+	}
+	else if (cursors.right.isDown)
+        {
+	weight += 1;
+      	weightText.setText('Weight: ' + weight);
+	}
+	else if (cursors.space.isDown)
+        {
+      	this.scene.stop();
+	this.scene.start();
+	}
+	else if (KeyQ.isDown)
+        {
+      	rate -= 0.0001;
+		if (rate < 0.001)
+       	 	{rate = 0.001
+		}
+      	rateText.setText('Spring rate: ' + rate);
+	}
+	else if (KeyE.isDown)
+        {
+      	rate += 0.0001;
+		if (rate > 0.05)
+       	 	{rate = 0.05
+		}
+      	rateText.setText('Spring rate: ' + rate);
+	}
+     }   
+}  
+const config = {
+    type: Phaser.AUTO,
+    width: 800,
+    height: 600,
+    backgroundColor: '#000000',
+    parent: 'phaser-parent',
+    physics: {
+        default: 'matter',
+        matter: {
+            enableSleeping: true,
+	
+         debug: {
+
+               
+          
+           
+            }
+        }
+    },
+    scene: [Example, Example2]
+};
+
+
+let game = new Phaser.Game(config);
+let length = 140;
+let cursors;
+let lengthText;
+let weightText;
+let weight = 50;
+let KeyQ;
+let rateText;
+let rate = 0.01;
+let KeyE;
+	</script>
+
+</body>
+</html>
